@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pickle Mandi - All Varieties</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff9e6;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            animation: fadeSlideDown 1s ease forwards;
+            opacity: 0;
+            transform: translateY(-40px);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            animation: fadeSlideUp 1s ease forwards;
+            opacity: 0;
+            transform: translateY(40px);
+            animation-delay: 0.5s;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .tab-button {
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .tab-button.active,
+        .tab-button:hover {
+            background: #388e3c;
+        }
+
+        /* Products Grid */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 250px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+        .product:hover {
+            transform: scale(0.97);
+        }
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 10px;
+            flex-grow: 1;
+        }
+        .product-info h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+            color: #4CAF50;
+        }
+        .product-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .quantity-container {
+            margin: 10px;
+            font-size: 0.9em;
+        }
+        .quantity-container input[type=number] {
+            width: 50px;
+            margin-left: 5px;
+            padding: 5px;
+            font-size: 1em;
+        }
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin: 0 10px 10px 10px;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        .add-btn:hover {
+            background-color: #388e3c;
+        }
+
+        /* Cart styles */
+        #cart {
+            margin-top: 30px;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #cart-items {
+            margin-bottom: 15px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        #total-price {
+            font-weight: bold;
+        }
+        #order-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        #order-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #order-btn:hover:not(:disabled) {
+            background-color: #1ebd5a;
+        }
+
+        /* Hide inactive tabs */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background-color: #eee;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .product {
+                width: 100%;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            .tab-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Pickle Mandi</h1>
+    <p>Authentic homemade pickles for every taste</p>
+</header>
+
+<div class="container">
+
+    <div class="tabs">
+        <button class="tab-button active" data-tab="pickles">Pickles</button>
+        <button class="tab-button" data-tab="podulu">Podulu Varieties</button>
+        <button class="tab-button" data-tab="nonveg">Nonveg Pickles</button>
+    </div>
+
+    <!-- Pickles Tab -->
+    <div class="tab-content active" id="pickles">
+        <h2 style="text-align:center;">Our Pickles (₹100 each)</h2>
+        <div class="products" id="pickles-products">
+            <!-- Pickles products inserted by JS -->
+        </div>
+
+        <div id="cart-pickles" class="cart-container" style="display:none;">
+            <h2>Your Cart</h2>
+            <div id="cart-items-pickles"></div>
+            <p><strong>Total: ₹<span id="total-price-pickles">0</span></strong></p>
+            <button id="order-btn-pickles" disabled>Order via WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Podulu Varieties Tab -->
+    <div class="tab-content" id="podulu">
+        <h2 style="text-align:center;">Podulu Varieties (₹80 each)</h2>
+        <div class="products" id="podulu-products">
+            <!-- Podulu products inserted by JS -->
+        </div>
+
+        <div id="cart-podulu" class="cart-container" style="display:none;">
+            <h2>Your Cart</h2>
+            <div id="cart-items-podulu"></div>
+            <p><strong>Total: ₹<span id="total-price-podulu">0</span></strong></p>
+            <button id="order-btn-podulu" disabled>Order via WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Nonveg Pickles Tab -->
+    <div class="tab-content" id="nonveg">
+        <h2 style="text-align:center;">Nonveg Pickles</h2>
+        <div class="products" id="nonveg-products">
+            <!-- Nonveg products inserted by JS -->
+        </div>
+
+        <div id="cart-nonveg" class="cart-container" style="display:none;">
+            <h2>Your Cart</h2>
+            <div id="cart-items-nonveg"></div>
+            <p><strong>Total: ₹<span id="total-price-nonveg">0</span></strong></p>
+            <button id="order-btn-nonveg" disabled>Order via WhatsApp</button>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Contact us: <strong>+91 93988 41028</strong> | Email: <a href="mailto:picklemandi@example.com">picklemandi@example.com</a></p>
+    <p>&copy; 2025 Pickle Mandi. All rights reserved.</p>
+</footer>
+
+<script>
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+
+            button.classList.add('active');
+            const tab = button.getAttribute('data-tab');
+            document.getElementById(tab).classList.add('active');
+        });
+    });
+
+    // Phone number for WhatsApp orders
+    const phoneNumber = '919398841028';
+
+    // ===== Pickles Data =====
+    const picklesData = [
+        {
+            name: 'Mango Pickle',
+            weight: '200g',
+            price: 100,
+            img: 'https://images.unsplash.com/photo-1590080877777-93a514e8b6df?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Lemon Pickle',
+            weight: '200g',
+            price: 100,
+            img: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Mixed Vegetable Pickle',
+            weight: '250g',
+            price: 100,
+            img: 'https://images.unsplash.com/photo-1549887539-0f90ed4e5f4c?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Carrot Pickle',
+            weight: '180g',
+            price: 100,
+            img: 'https://images.unsplash.com/photo-1585238342029-3d7e6c7486b0?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Ginger Pickle',
+            weight: '150g',
+            price: 100,
+            img: 'https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=400&q=80',
+        }
+    ];
+
+    // ===== Podulu Data =====
+    const poduluData = [
+        {
+            name: 'Chili Podulu',
+            weight: '150g',
+            price: 80,
+            img: 'https://images.unsplash.com/photo-1566843977277-677b8d5d05a2?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Garlic Podulu',
+            weight: '150g',
+            price: 80,
+            img: 'https://images.unsplash.com/photo-1603816244250-9a92e5b9c2f0?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Tamarind Podulu',
+            weight: '150g',
+            price: 80,
+            img: 'https://images.unsplash.com/photo-1544117519-b4340f1ff85d?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Mustard Podulu',
+            weight: '150g',
+            price: 80,
+            img: 'https://images.unsplash.com/photo-1589980188362-cd95d9d06a10?auto=format&fit=crop&w=400&q=80',
+        }
+    ];
+
+    // ===== Nonveg Pickles Data =====
+    const nonvegProductsData = [
+        {
+            name: 'Fish Pickle',
+            weight: '250g',
+            price: 150,
+            img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Prawn Pickle',
+            weight: '200g',
+            price: 180,
+            img: 'https://images.unsplash.com/photo-1543352634-3a77e562b139?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Mutton Pickle',
+            weight: '220g',
+            price: 200,
+            img: 'https://images.unsplash.com/photo-1562967916-eb82221dfb23?auto=format&fit=crop&w=400&q=80',
+        },
+        {
+            name: 'Chicken Pickle',
+            weight: '200g',
+            price: 170,
+            img: 'https://images.unsplash.com/photo-1601050691286-5c7e17b1bcf3?auto=format&fit=crop&w=400&q=80',
+        }
+    ];
+
+    // --- Utility to create product HTML with quantity and add button ---
+    function createProductHTML(product) {
+        const price = product.price;
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.setAttribute('data-name', product.name);
+        div.setAttribute('data-weight', product.weight);
+        div.setAttribute('data-price', price);
+
+        div.innerHTML = `
+            <img src="${product.img}" alt="${product.name}" />
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p>Weight: ${product.weight}</p>
+                <p>₹${price}</p>
+            </div>
+            <div class="quantity-container">
+                <label>Qty: <input type="number" min="1" value="1" /></label>
+            </div>
+            <button class="add-btn">Add to Cart</button>
+        `;
+        return div;
+    }
+
+    // Render Pickles products
+    const picklesContainer = document.getElementById('pickles-products');
+    picklesData.forEach(product => {
+        picklesContainer.appendChild(createProductHTML(product));
+    });
+
+    // Render Podulu products
+    const poduluContainer = document.getElementById('podulu-products');
+    poduluData.forEach(product => {
+        poduluContainer.appendChild(createProductHTML(product));
+    });
+
+    // Render Nonveg products
+    const nonvegContainer = document.getElementById('nonveg-products');
+    nonvegProductsData.forEach(product => {
+        nonvegContainer.appendChild(createProductHTML(product));
+    });
+
+    // Cart data structures for each tab
+    const carts = {
+        pickles: [],
+        podulu: [],
+        nonveg: []
+    };
+
+    // Helper to add items to cart
+    function addToCart(cartArray, name, weight, price, qty) {
+        qty = parseInt(qty);
+        if (qty < 1) return;
+        const index = cartArray.findIndex(item => item.name === name && item.weight === weight);
+        if (index > -1) {
+            cartArray[index].qty += qty;
+        } else {
+            cartArray.push({ name, weight, price: parseInt(price), qty });
+        }
+    }
+
+    // Helper to update cart UI per tab
+    function updateCartUI(tab) {
+        const cartArray = carts[tab];
+        const cartDiv = document.getElementById(`cart-${tab}`);
+        const cartItemsDiv = document.getElementById(`cart-items-${tab}`);
+        const totalPriceSpan = document.getElementById(`total-price-${tab}`);
+        const orderBtn = document.getElementById(`order-btn-${tab}`);
+
+        cartItemsDiv.innerHTML = '';
+        let total = 0;
+        cartArray.forEach(item => {
+            total += item.price * item.qty;
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.textContent = `${item.name} (${item.weight}) x ${item.qty} = ₹${item.price * item.qty}`;
+            cartItemsDiv.appendChild(div);
+        });
+        totalPriceSpan.textContent = total;
+        orderBtn.disabled = total === 0;
+        cartDiv.style.display = total > 0 ? 'block' : 'none';
+    }
+
+    // Add event listeners for Add to Cart buttons in each tab
+    function setupAddToCart(tab, container) {
+        container.addEventListener('click', e => {
+            if (e.target.classList.contains('add-btn')) {
+                const productDiv = e.target.closest('.product');
+                const name = productDiv.dataset.name;
+                const weight = productDiv.dataset.weight;
+                const price = productDiv.dataset.price;
+                const qtyInput = productDiv.querySelector('input[type="number"]');
+                const qty = qtyInput.value;
+                addToCart(carts[tab], name, weight, price, qty);
+                updateCartUI(tab);
+            }
+        });
+    }
+
+    setupAddToCart('pickles', picklesContainer);
+    setupAddToCart('podulu', poduluContainer);
+    setupAddToCart('nonveg', nonvegContainer);
+
+    // Order button handlers
+    function orderViaWhatsApp(tab) {
+        const cartArray = carts[tab];
+        if (cartArray.length === 0) return;
+
+        let categoryText = '';
+        if(tab === 'pickles') categoryText = 'Pickles';
+        else if(tab === 'podulu') categoryText = 'Podulu Varieties';
+        else if(tab === 'nonveg') categoryText = 'Nonveg Pickles';
+
+        let message = `I want to order ${categoryText} from Pickle Mandi:%0A`;
+        let total = 0;
+        cartArray.forEach(item => {
+            message += `- ${item.name} (${item.weight}) x ${item.qty}%0A`;
+            total += item.price * item.qty;
+        });
+        message += `Total Price: ₹${total}`;
+
+        const url = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.open(url, '_blank');
+    }
+
+    // Setup order buttons
+    document.getElementById('order-btn-pickles').addEventListener('click', () => orderViaWhatsApp('pickles'));
+    document.getElementById('order-btn-podulu').addEventListener('click', () => orderViaWhatsApp('podulu'));
+    document.getElementById('order-btn-nonveg').addEventListener('click', () => orderViaWhatsApp('nonveg'));
+
+    // Animation keyframes insert
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeSlideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>
